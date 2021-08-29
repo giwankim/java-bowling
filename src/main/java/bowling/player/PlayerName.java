@@ -1,8 +1,8 @@
 package bowling.player;
 
 import bowling.exception.InvalidPlayerNameException;
-import bowling.utils.StringUtils;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 
 public class PlayerName {
 
@@ -25,7 +25,7 @@ public class PlayerName {
     }
 
     private void validate(String name) {
-        if (StringUtils.isNullOrEmpty(name)) {
+        if (StringUtils.isBlank(name)) {
             throw new InvalidPlayerNameException("플레이어 이름을 입력해야 합니다.");
         }
         if (!name.matches(THREE_ENGLISH_CHARS)) {

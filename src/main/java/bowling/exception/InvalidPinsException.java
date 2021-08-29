@@ -1,14 +1,14 @@
 package bowling.exception;
 
-public class InvalidRollException extends RuntimeException {
+public class InvalidPinsException extends RuntimeException {
 
     public static final String INVALID_PINS_MESSAGE = "볼링 핀의 개수는 1-10의 숫자입니다.";
 
-    public InvalidRollException() {
+    public InvalidPinsException() {
         this(INVALID_PINS_MESSAGE);
     }
 
-    public InvalidRollException(String message) {
+    public InvalidPinsException(String message) {
         super(message);
     }
 }
