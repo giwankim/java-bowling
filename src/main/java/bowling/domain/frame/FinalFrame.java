@@ -6,6 +6,7 @@ import bowling.domain.state.State;
 public class FinalFrame implements Frame {
 
     private static final int LAST_FRAME_NUMBER = 10;
+
     private State state;
 
     private FinalFrame() {

@@ -13,6 +13,7 @@ public class NormalFrame implements Frame {
 
     private final int frameNumber;
     private State state;
+    private Frame next;
 
     private NormalFrame(int frameNumber) {
         this(frameNumber, Ready.of());
@@ -36,16 +37,21 @@ public class NormalFrame implements Frame {
     public Frame bowl(int roll) {
         state = state.bowl(Pins.of(roll));
         if (state.isFinished()) {
-            return nextFrame();
+            next = nextFrame();
+            return next;
         }
         return this;
     }
 
     private Frame nextFrame() {
-        if (frameNumber == MAX_NORMAL_FRAME) {
+        if (frameNumber + 1 == MAX_NORMAL_FRAME) {
             return FinalFrame.of();
         }
         return NormalFrame.of(frameNumber + 1);
+    }
+
+    public int getFrameNumber() {
+        return frameNumber;
     }
 
     @Override

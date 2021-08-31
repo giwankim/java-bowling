@@ -1,6 +1,7 @@
 package bowling.domain.state;
 
 import bowling.domain.Pins;
+import bowling.exception.InvalidSpareException;
 import java.util.Objects;
 
 public class Spare extends Finished {
@@ -20,7 +21,7 @@ public class Spare extends Finished {
 
     private void validate(Pins firstBowl, Pins secondBowl) {
         if (!firstBowl.isSpare(secondBowl)) {
-            throw new RuntimeException("핀들의 합이 스페어가 아닙니다.");
+            throw new InvalidSpareException();
         }
     }
 
