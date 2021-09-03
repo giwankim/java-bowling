@@ -16,6 +16,6 @@ class SpareTest {
 
     @Test
     void description() {
-        assertThat(Spare.of(4, 6).description()).isEqualTo("4 | /");
+        assertThat(Spare.of(4, 6).description()).isEqualTo("4|/");
     }
 }

@@ -16,6 +16,6 @@ class MissTest {
 
     @Test
     void description() {
-        assertThat(Miss.of(2, 3).description()).isEqualTo("2 | 3");
+        assertThat(Miss.of(2, 3).description()).isEqualTo("2|3");
     }
 }

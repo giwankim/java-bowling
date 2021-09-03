@@ -8,22 +8,27 @@ import org.junit.jupiter.api.Test;
 
 class ReadyTest {
 
-    private State state;
+    private State ready;
 
     @BeforeEach
     void setUp() {
-        state = Ready.of();
+        ready = Ready.of();
     }
 
     @Test
     void bowl_strike() {
-        State next = state.bowl(Pins.of(10));
+        State next = ready.bowl(Pins.of(10));
         assertThat(next).isInstanceOf(Strike.class);
     }
 
     @Test
-    void bowl() {
-        State next = state.bowl(Pins.of(5));
+    void bowl_firstBowl() {
+        State next = ready.bowl(Pins.of(5));
         assertThat(next).isInstanceOf(FirstBowl.class);
+    }
+
+    @Test
+    void description() {
+        assertThat(ready.description()).isEmpty();
     }
 }

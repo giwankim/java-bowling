@@ -1,6 +1,7 @@
 package bowling.view;
 
-import bowling.player.PlayerName;
+import bowling.dto.FrameResult;
+import bowling.dto.FrameResults;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,8 +26,10 @@ public class ResultView {
         return StringUtils.center(numString, WIDTH);
     }
 
-    public static void printStates(PlayerName playerName) {
-//        String center = StringUtils.center(playerName.getName(), WIDTH);
-//        System.out.println(SEPARATOR + center);
+    public static void printFrameResults(FrameResults frameResults) {
+        frameResults.getResults()
+                .stream()
+                .map(FrameResult::getDescription)
+                .forEach(System.out::println);
     }
 }

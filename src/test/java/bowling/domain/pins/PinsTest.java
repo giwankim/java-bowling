@@ -47,12 +47,12 @@ class PinsTest {
     @Test
     void description_spare() {
         String description = Pins.of(1).description(Pins.of(9));
-        assertThat(description).isEqualTo("1 | /");
+        assertThat(description).isEqualTo("1|/");
     }
 
     @Test
     void description_miss() {
         String description = Pins.of(2).description(Pins.of(3));
-        assertThat(description).isEqualTo("2 | 3");
+        assertThat(description).isEqualTo("2|3");
     }
 }

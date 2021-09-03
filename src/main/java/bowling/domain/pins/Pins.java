@@ -41,8 +41,8 @@ public class Pins {
 
     public String description(Pins pins) {
         if (isSpare(pins)) {
-            return roll + " | /";
+            return roll + "|/";
         }
-        return roll + " | " + pins.roll;
+        return roll + "|" + pins.roll;
     }
 }
