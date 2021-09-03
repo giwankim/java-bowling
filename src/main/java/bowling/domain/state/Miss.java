@@ -1,44 +1,35 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
-import java.util.Objects;
+import bowling.domain.pins.Pins;
+import bowling.exception.InvalidMissException;
 
 public class Miss extends Finished {
 
-    private final Pins firstBowl;
-    private final Pins secondBowl;
+    private final Pins firstRoll;
+    private final Pins secondRoll;
 
-    private Miss(Pins firstBowl, Pins secondBowl) {
-        validate(firstBowl, secondBowl);
-        this.firstBowl = firstBowl;
-        this.secondBowl = secondBowl;
+    private Miss(Pins firstRoll, Pins secondRoll) {
+        validate(firstRoll, secondRoll);
+        this.firstRoll = firstRoll;
+        this.secondRoll = secondRoll;
     }
 
-    public static Miss of(Pins firstBowl, Pins secondBowl) {
-        return new Miss(firstBowl, secondBowl);
+    public static Miss of(Pins firstRoll, Pins secondRoll) {
+        return new Miss(firstRoll, secondRoll);
     }
 
-    private void validate(Pins firstBowl, Pins secondBowl) {
-        if (firstBowl.isSpare(secondBowl)) {
-            throw new RuntimeException("두 핀의 합이 스페어입니다.");
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Miss)) {
-            return false;
-        }
-        Miss miss = (Miss) o;
-        return Objects.equals(firstBowl, miss.firstBowl) && Objects.equals(
-                secondBowl, miss.secondBowl);
+    public static Miss of(int firstRoll, int secondRoll) {
+        return new Miss(Pins.of(firstRoll), Pins.of(secondRoll));
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(firstBowl, secondBowl);
+    public String description() {
+        return firstRoll.description(secondRoll);
+    }
+
+    private void validate(Pins firstRoll, Pins secondRoll) {
+        if (firstRoll.isSpare(secondRoll)) {
+            throw new InvalidMissException();
+        }
     }
 }

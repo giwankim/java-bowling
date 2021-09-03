@@ -3,24 +3,19 @@ package bowling.domain.state;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.Pins;
+import bowling.exception.InvalidMissException;
 import org.junit.jupiter.api.Test;
 
 class MissTest {
 
     @Test
     void of_invalid() {
-        Pins firstBowl = Pins.of(5);
-        Pins secondBowl = Pins.of(5);
-        assertThatThrownBy(() -> Miss.of(firstBowl, secondBowl))
-                .isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> Miss.of(4, 6))
+                .isInstanceOf(InvalidMissException.class);
     }
 
     @Test
-    void isFinished() {
-        Pins firstBowl = Pins.of(2);
-        Pins secondBowl = Pins.of(3);
-        State state = Miss.of(firstBowl, secondBowl);
-        assertThat(state.isFinished()).isTrue();
+    void description() {
+        assertThat(Miss.of(2, 3).description()).isEqualTo("2 | 3");
     }
 }

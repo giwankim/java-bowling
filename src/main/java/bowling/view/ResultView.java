@@ -26,7 +26,7 @@ public class ResultView {
     }
 
     public static void printStates(PlayerName playerName) {
-        String center = StringUtils.center(playerName.getName(), WIDTH);
-        System.out.println(SEPARATOR + center);
+//        String center = StringUtils.center(playerName.getName(), WIDTH);
+//        System.out.println(SEPARATOR + center);
     }
 }

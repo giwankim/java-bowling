@@ -2,7 +2,7 @@ package bowling.domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bowling.domain.Pins;
+import bowling.domain.pins.Pins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +16,14 @@ class ReadyTest {
     }
 
     @Test
-    void bowl_firstBowl() {
-        State bowl = state.bowl(Pins.of(5));
-        assertThat(bowl.isFinished()).isFalse();
+    void bowl_strike() {
+        State next = state.bowl(Pins.of(10));
+        assertThat(next).isInstanceOf(Strike.class);
     }
 
     @Test
-    void bowl_strike() {
-        State strike = state.bowl(Pins.of(Pins.MAX_PINS));
-        assertThat(strike.isFinished()).isTrue();
+    void bowl() {
+        State next = state.bowl(Pins.of(5));
+        assertThat(next).isInstanceOf(FirstBowl.class);
     }
 }

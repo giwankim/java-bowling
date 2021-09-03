@@ -1,8 +1,8 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pins.Pins;
 
-public class Ready extends Running {
+public class Ready extends Playing {
 
     private Ready() {
     }
@@ -12,26 +12,15 @@ public class Ready extends Running {
     }
 
     @Override
-    public State bowl(Pins pins) {
-        if (pins.isStrike()) {
+    public State bowl(Pins roll) {
+        if (roll.isStrike()) {
             return Strike.of();
         }
-        return FirstBowl.of(pins);
+        return FirstBowl.of(roll);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Ready)) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
+    public String description() {
+        return "";
     }
 }

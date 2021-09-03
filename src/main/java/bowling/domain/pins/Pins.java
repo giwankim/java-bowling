@@ -1,7 +1,6 @@
-package bowling.domain;
+package bowling.domain.pins;
 
 import bowling.exception.InvalidPinsException;
-import java.util.Objects;
 
 public class Pins {
 
@@ -27,26 +26,23 @@ public class Pins {
         return roll + pins.roll == MAX_PINS;
     }
 
+    public String description() {
+        if (isStrike()) {
+            return "X";
+        }
+        return String.valueOf(roll);
+    }
+
     private void validate(int roll) {
         if (roll < MIN_PINS || roll > MAX_PINS) {
             throw new InvalidPinsException();
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
+    public String description(Pins pins) {
+        if (isSpare(pins)) {
+            return roll + " | /";
         }
-        if (!(o instanceof Pins)) {
-            return false;
-        }
-        Pins pins = (Pins) o;
-        return roll == pins.roll;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(roll);
+        return roll + " | " + pins.roll;
     }
 }

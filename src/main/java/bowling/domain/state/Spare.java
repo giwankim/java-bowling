@@ -1,45 +1,35 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pins.Pins;
 import bowling.exception.InvalidSpareException;
-import java.util.Objects;
 
 public class Spare extends Finished {
 
-    private final Pins firstBowl;
-    private final Pins secondBowl;
+    private final Pins firstRoll;
+    private final Pins secondRoll;
 
-    private Spare(Pins firstBowl, Pins secondBowl) {
-        validate(firstBowl, secondBowl);
-        this.firstBowl = firstBowl;
-        this.secondBowl = secondBowl;
+    private Spare(Pins firstRoll, Pins secondRoll) {
+        validate(firstRoll, secondRoll);
+        this.firstRoll = firstRoll;
+        this.secondRoll = secondRoll;
     }
 
-    public static Spare of(Pins firstBowl, Pins secondBowl) {
-        return new Spare(firstBowl, secondBowl);
+    public static Spare of(Pins firstRoll, Pins secondRoll) {
+        return new Spare(firstRoll, secondRoll);
     }
 
-    private void validate(Pins firstBowl, Pins secondBowl) {
-        if (!firstBowl.isSpare(secondBowl)) {
+    public static Spare of(int firstRoll, int secondRoll) {
+        return new Spare(Pins.of(firstRoll), Pins.of(secondRoll));
+    }
+
+    @Override
+    public String description() {
+        return firstRoll.description(secondRoll);
+    }
+
+    private void validate(Pins firstRoll, Pins secondRoll) {
+        if (!firstRoll.isSpare(secondRoll)) {
             throw new InvalidSpareException();
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Spare)) {
-            return false;
-        }
-        Spare spare = (Spare) o;
-        return Objects.equals(firstBowl, spare.firstBowl) && Objects.equals(
-                secondBowl, spare.secondBowl);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstBowl, secondBowl);
     }
 }

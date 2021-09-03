@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 public class PlayerName {
 
     public static final int MAX_NAME_LENGTH = 3;
-    public static final String THREE_ENGLISH_CHARS = String.format("[a-zA-Z]{%d}", MAX_NAME_LENGTH);
+    public static final String VALID_REGEX = String.format("[a-zA-Z]{%d}", MAX_NAME_LENGTH);
 
     private final String name;
 
@@ -20,17 +20,17 @@ public class PlayerName {
         return new PlayerName(name);
     }
 
-    public String getName() {
-        return name;
-    }
-
     private void validate(String name) {
         if (StringUtils.isBlank(name)) {
             throw new InvalidPlayerNameException("플레이어 이름을 입력해야 합니다.");
         }
-        if (!name.matches(THREE_ENGLISH_CHARS)) {
+        if (!name.matches(VALID_REGEX)) {
             throw new InvalidPlayerNameException();
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -42,11 +42,11 @@ public class PlayerName {
             return false;
         }
         PlayerName that = (PlayerName) o;
-        return Objects.equals(getName(), that.getName());
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(name);
     }
 }

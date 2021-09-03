@@ -1,46 +1,37 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
-import java.util.Objects;
+import bowling.domain.pins.Pins;
+import bowling.exception.InvalidFirstBowlException;
 
-public class FirstBowl extends Running {
+public class FirstBowl extends Playing {
 
-    private final Pins bowl;
+    private final Pins firstRoll;
 
-    private FirstBowl(Pins firstBowl) {
-        this.bowl = firstBowl;
+    private FirstBowl(Pins firstRoll) {
+        validate(firstRoll);
+        this.firstRoll = firstRoll;
     }
 
-    public static FirstBowl of(Pins firstBowl) {
-        return new FirstBowl(firstBowl);
-    }
-
-    public static FirstBowl of(int rolls) {
-        return new FirstBowl(Pins.of(rolls));
+    public static FirstBowl of(Pins roll) {
+        return new FirstBowl(roll);
     }
 
     @Override
-    public State bowl(Pins pins) {
-        if (bowl.isSpare(pins)) {
-            return Spare.of(bowl, pins);
+    public State bowl(Pins roll) {
+        if (roll.isStrike()) {
+            return Strike.of();
         }
-        return Miss.of(bowl, pins);
+        return FirstBowl.of(roll);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof FirstBowl)) {
-            return false;
-        }
-        FirstBowl firstBowl1 = (FirstBowl) o;
-        return Objects.equals(bowl, firstBowl1.bowl);
+    public String description() {
+        return firstRoll.description();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(bowl);
+    private void validate(Pins firstRoll) {
+        if (firstRoll.isStrike()) {
+            throw new InvalidFirstBowlException();
+        }
     }
 }

@@ -1,12 +1,13 @@
 package bowling.domain.state;
 
-import bowling.domain.Pins;
+import bowling.domain.pins.Pins;
+import bowling.exception.FinishedStateException;
 
 public abstract class Finished implements State {
 
     @Override
-    public State bowl(Pins pins) {
-        throw new RuntimeException();
+    public State bowl(Pins roll) {
+        throw new FinishedStateException();
     }
 
     @Override

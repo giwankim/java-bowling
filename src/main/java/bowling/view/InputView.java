@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class InputView {
 
     public static final String NAME_PROMPT = "플레이어 이름은(3 english letters)?: ";
-    public static final String FRAME_PROMPT_TEMPLATE = "%d프레임 투구 : ";
+    public static final String BOWL_PROMPT = "%d프레임 투구 : ";
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -18,7 +18,7 @@ public class InputView {
     }
 
     public static int frameScore(int frameNumber) {
-        System.out.printf(FRAME_PROMPT_TEMPLATE, frameNumber);
+        System.out.printf(BOWL_PROMPT, frameNumber);
         return Integer.parseInt(scanner.nextLine());
     }
 }
