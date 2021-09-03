@@ -16,12 +16,16 @@ public class FirstBowl extends Playing {
         return new FirstBowl(roll);
     }
 
+    public static FirstBowl of(int roll) {
+        return new FirstBowl(Pins.of(roll));
+    }
+
     @Override
     public State bowl(Pins roll) {
-        if (roll.isStrike()) {
-            return Strike.of();
+        if (firstRoll.isSpare(roll)) {
+            return Spare.of(firstRoll, roll);
         }
-        return FirstBowl.of(roll);
+        return Miss.of(firstRoll, roll);
     }
 
     @Override
