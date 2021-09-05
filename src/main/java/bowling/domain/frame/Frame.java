@@ -9,8 +9,5 @@ public interface Frame {
 
     int frameNumber();
 
-    FrameResults createFrameResults();
-
-    void addFrameResult(FrameResults results);
-
+    boolean isFinished();
 }

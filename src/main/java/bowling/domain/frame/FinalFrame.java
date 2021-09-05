@@ -1,9 +1,9 @@
-package bowling.dto;
+package bowling.domain.frame;
 
-import bowling.domain.frame.Frame;
 import bowling.domain.pins.Pins;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.dto.FrameResults;
 
 public class FinalFrame implements Frame {
 
@@ -29,17 +29,22 @@ public class FinalFrame implements Frame {
     }
 
     @Override
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
+    @Override
     public int frameNumber() {
         return 0;
     }
 
-    @Override
-    public FrameResults createFrameResults() {
-        return null;
-    }
-
-    @Override
-    public void addFrameResult(FrameResults results) {
-
-    }
+//    @Override
+//    public FrameResults createFrameResults() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void addFrameResult(FrameResults results) {
+//
+//    }
 }

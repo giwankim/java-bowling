@@ -18,6 +18,23 @@ public class Pins {
         return new Pins(roll);
     }
 
+    public String description() {
+        if (isGutter()) {
+            return "-";
+        }
+        if (isStrike()) {
+            return "X";
+        }
+        return String.valueOf(roll);
+    }
+
+    public String description(Pins pins) {
+        if (isSpare(pins)) {
+            return description() + "|/";
+        }
+        return description() + "|" + pins.description();
+    }
+
     public boolean isStrike() {
         return roll == MAX_PINS;
     }
@@ -26,23 +43,13 @@ public class Pins {
         return roll + pins.roll == MAX_PINS;
     }
 
-    public String description() {
-        if (isStrike()) {
-            return "X";
-        }
-        return String.valueOf(roll);
+    public boolean isGutter() {
+        return roll == MIN_PINS;
     }
 
     private void validate(int roll) {
         if (roll < MIN_PINS || roll > MAX_PINS) {
             throw new InvalidPinsException();
         }
-    }
-
-    public String description(Pins pins) {
-        if (isSpare(pins)) {
-            return roll + "|/";
-        }
-        return roll + "|" + pins.roll;
     }
 }

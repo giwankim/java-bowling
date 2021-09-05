@@ -45,6 +45,13 @@ class PinsTest {
     }
 
     @Test
+    void description_gutter() {
+        assertThat(Pins.of(0).description()).isEqualTo("-");
+        assertThat(Pins.of(3).description(Pins.of(0))).isEqualTo("3|-");
+        assertThat(Pins.of(0).description(Pins.of(0))).isEqualTo("-|-");
+    }
+
+    @Test
     void description_spare() {
         String description = Pins.of(1).description(Pins.of(9));
         assertThat(description).isEqualTo("1|/");
