@@ -9,8 +9,8 @@ import bowling.exception.InvalidNormalFrameException;
 
 public class NormalFrame implements Frame {
 
-    public static final int MIN_FRAME_NUMBER = 1;
-    public static final int MAX_FRAME_NUMBER = 9;
+    public static final int MIN_NORMAL_FRAME_NUMBER = 1;
+    public static final int MAX_NORMAL_FRAME_NUMBER = 9;
 
     private final int frameNumber;
     private State state;
@@ -40,8 +40,9 @@ public class NormalFrame implements Frame {
     }
 
     @Override
-    public Frame bowl(Pins roll) {
-        state = state.bowl(roll);
+    public Frame bowl(int roll) {
+        Pins pins = Pins.of(roll);
+        state = state.bowl(pins);
         if (state.isFinished()) {
             next = nextFrame();
             return next;
@@ -49,21 +50,21 @@ public class NormalFrame implements Frame {
         return this;
     }
 
-    //    @Override
-//    public FrameResults createFrameResults() {
-//        FrameResults frameResults = FrameResults.of();
-//        addFrameResult(frameResults);
-//        return frameResults;
-//    }
+    @Override
+    public FrameResults createFrameResults() {
+        FrameResults frameResults = FrameResults.of();
+        addFrameResult(frameResults);
+        return frameResults;
+    }
 
-//    @Override
-//    public void addFrameResult(FrameResults frameResults) {
-//        FrameResult frameResult = FrameResult.of(state.description());
-//        frameResults.addFrameResult(frameResult);
-//        if (next != null) {
-//            next.addFrameResult(frameResults);
-//        }
-//    }
+    @Override
+    public void addFrameResult(FrameResults frameResults) {
+        FrameResult frameResult = FrameResult.of(state.description());
+        frameResults.addFrameResult(frameResult);
+        if (next != null) {
+            next.addFrameResult(frameResults);
+        }
+    }
 
     @Override
     public boolean isFinished() {
@@ -71,26 +72,15 @@ public class NormalFrame implements Frame {
     }
 
     private Frame nextFrame() {
-        if (frameNumber + 1 == MAX_FRAME_NUMBER) {
+        if (frameNumber == MAX_NORMAL_FRAME_NUMBER) {
             return FinalFrame.of();
         }
         return NormalFrame.of(frameNumber + 1);
     }
 
     private void validate(int frameNumber) {
-        if (frameNumber < MIN_FRAME_NUMBER || frameNumber > MAX_FRAME_NUMBER) {
+        if (frameNumber < MIN_NORMAL_FRAME_NUMBER || frameNumber > MAX_NORMAL_FRAME_NUMBER) {
             throw new InvalidNormalFrameException();
         }
     }
-
-//    public static void main(String[] args) {
-//        Frame frame = NormalFrame.of(1);
-//        frame.bowl(Pins.of(5))
-//                .bowl(Pins.of(3))
-//                .bowl(Pins.of(2))
-//                .bowl(Pins.of(8))
-//                .bowl(Pins.of(10));
-//        FrameResults frameResults = frame.createFrameResults();
-//        printFrameResults(frameResults);
-//    }
 }

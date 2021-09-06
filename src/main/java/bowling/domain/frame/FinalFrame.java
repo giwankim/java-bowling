@@ -3,6 +3,7 @@ package bowling.domain.frame;
 import bowling.domain.pins.Pins;
 import bowling.domain.state.Ready;
 import bowling.domain.state.State;
+import bowling.dto.FrameResult;
 import bowling.dto.FrameResults;
 
 public class FinalFrame implements Frame {
@@ -15,17 +16,15 @@ public class FinalFrame implements Frame {
         state = Ready.of();
     }
 
-    private FinalFrame(State state) {
-        this.state = state;
-    }
-
     public static FinalFrame of() {
         return new FinalFrame();
     }
 
     @Override
-    public Frame bowl(Pins roll) {
-        return null;
+    public Frame bowl(int roll) {
+        Pins pins = Pins.of(roll);
+        state = state.bowl(pins);
+        return this;
     }
 
     @Override
@@ -35,16 +34,19 @@ public class FinalFrame implements Frame {
 
     @Override
     public int frameNumber() {
-        return 0;
+        return FINAL_FRAME_NUMBER;
     }
 
-//    @Override
-//    public FrameResults createFrameResults() {
-//        return null;
-//    }
-//
-//    @Override
-//    public void addFrameResult(FrameResults results) {
-//
-//    }
+    @Override
+    public FrameResults createFrameResults() {
+        FrameResults frameResults = FrameResults.of();
+        addFrameResult(frameResults);
+        return frameResults;
+    }
+
+    @Override
+    public void addFrameResult(FrameResults results) {
+        FrameResult frameResult = FrameResult.of(state.description());
+        results.addFrameResult(frameResult);
+    }
 }

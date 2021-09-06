@@ -3,7 +3,6 @@ package bowling.domain.frame;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import bowling.domain.pins.Pins;
 import bowling.exception.InvalidNormalFrameException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +20,7 @@ class NormalFrameTest {
     @Test
     void bowl_strike() {
         Frame frame = NormalFrame.of(1);
-        frame = frame.bowl(Pins.of(10));
+        frame = frame.bowl(10);
         assertThat(frame.frameNumber()).isEqualTo(2);
     }
 }
