@@ -10,44 +10,54 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ResultView {
 
-    public static final String SEPARATOR = "|";
-    public static final String NAME_HEADER = "| NAME |";
     public static final int WIDTH = 6;
+    public static final String NUMBER_FORMAT = "%02d";
+    public static final String SEPARATOR = "|";
+    public static final String NAME_PREFIX = "| NAME ";
+    public static final String SPACES = StringUtils.repeat(" ", WIDTH);
 
     private ResultView() {
     }
 
-    public static void printFrameResults(PlayerName playerName, FrameResults frameResults) {
-        List<String> frameDescriptions = frameResults.getResults()
+    public static void printScoreBoard(PlayerName playerName, FrameResults frameResults) {
+        printHeaderRow();
+        printFrameResults(playerName, frameResults);
+    }
+
+    private static void printHeaderRow() {
+        String headerRow = IntStream.range(1, 11)
+                .mapToObj(ResultView::frameNumberToString)
+                .collect(Collectors.joining(SEPARATOR));
+        System.out.println(NAME_PREFIX + wrapSeparators(headerRow));
+    }
+
+    private static void printFrameResults(PlayerName playerName, FrameResults frameResults) {
+        System.out.println(playerNamePrefix(playerName) + frameResultsToString(frameResults));
+    }
+
+    private static String frameResultsToString(FrameResults frameResults) {
+        List<String> descriptions = frameResults.getResults()
                 .stream()
                 .map(FrameResult::getDescription)
                 .map(s -> StringUtils.center(s, WIDTH))
                 .collect(Collectors.toList());
-        while (frameDescriptions.size() < 10) {
-            frameDescriptions.add(StringUtils.center(" ", WIDTH));
+        while (descriptions.size() < 10) {
+            descriptions.add(SPACES);
         }
-        String resultsString = String.join(SEPARATOR, frameDescriptions) + SEPARATOR;
-        printFrameHeaders();
-        printName(playerName);
-        System.out.println(resultsString);
+        return wrapSeparators(String.join(SEPARATOR, descriptions));
     }
 
-    private static void printName(PlayerName playerName) {
+    private static String playerNamePrefix(PlayerName playerName) {
         String name = playerName.getName();
-        String centeredName = SEPARATOR + StringUtils.center(name, WIDTH) + SEPARATOR;
-        System.out.print(centeredName);
-    }
-
-    private static void printFrameHeaders() {
-        List<String> headers = IntStream.range(1, 11)
-                .mapToObj(ResultView::frameNumberToString)
-                .collect(Collectors.toList());
-        String frameHeader = NAME_HEADER + String.join(SEPARATOR, headers) + SEPARATOR;
-        System.out.println(frameHeader);
+        return SEPARATOR + StringUtils.center(name, WIDTH);
     }
 
     private static String frameNumberToString(int frameNumber) {
-        String numString = String.format("%02d", frameNumber);
-        return StringUtils.center(numString, WIDTH);
+        String numberString = String.format(NUMBER_FORMAT, frameNumber);
+        return StringUtils.center(numberString, WIDTH);
+    }
+
+    private static String wrapSeparators(String string) {
+        return SEPARATOR + string + SEPARATOR;
     }
 }

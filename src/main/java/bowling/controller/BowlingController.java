@@ -22,17 +22,16 @@ public class BowlingController {
 
     public void run() {
         Frame firstFrame = NormalFrame.of(1);
-        ResultView.printFrameResults(playerName, firstFrame.createFrameResults());
-
+        ResultView.printScoreBoard(playerName, firstFrame.createFrameResults());
         Frame currentFrame = firstFrame;
         while (!isGameOver(currentFrame)) {
             int roll = InputView.frameScore(currentFrame.frameNumber());
             currentFrame = currentFrame.bowl(roll);
-            ResultView.printFrameResults(playerName, firstFrame.createFrameResults());
+            ResultView.printScoreBoard(playerName, firstFrame.createFrameResults());
         }
     }
 
     private static boolean isGameOver(Frame frame) {
-        return frame.frameNumber() == FinalFrame.FINAL_FRAME_NUMBER && frame.isFinished();
+        return frame.frameNumber() == FinalFrame.FRAME_NUMBER && frame.isFinished();
     }
 }

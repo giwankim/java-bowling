@@ -8,7 +8,7 @@ import bowling.dto.FrameResults;
 
 public class FinalFrame implements Frame {
 
-    public static final int FINAL_FRAME_NUMBER = 10;
+    public static final int FRAME_NUMBER = 10;
 
     private State state;
 
@@ -34,7 +34,7 @@ public class FinalFrame implements Frame {
 
     @Override
     public int frameNumber() {
-        return FINAL_FRAME_NUMBER;
+        return FRAME_NUMBER;
     }
 
     @Override
